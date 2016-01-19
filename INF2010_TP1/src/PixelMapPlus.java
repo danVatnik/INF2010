@@ -57,7 +57,7 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 	public void negate()
 	{
 		// compléter
-		int var;
+		
 		
 	}
 	
@@ -136,7 +136,46 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 	public void crop(int h, int w)
 	{
 		// compléter		
+		AbstractPixel [][] croppedImage = new AbstractPixel[h][w];
 		
+		for(int row=0; row < h; row++)
+		{
+			for(int col=0; col < w; col++)
+			{
+				if(row < height && col < width){
+					croppedImage[row][col] = imageData[row][col];
+				}
+				else{
+					switch (imageType){
+					
+					case BW:
+								
+						croppedImage[row][col] = new BWPixel();
+						
+						break;
+					case Gray:
+						
+						croppedImage[row][col] = new GrayPixel();
+						
+						break;
+					case Color:
+						
+						croppedImage[row][col] = new ColorPixel();
+						
+						break;
+					case Transparent:
+						
+						croppedImage[row][col] = new TransparentPixel();
+
+						break;
+					}
+				}	
+			}
+		}
+		
+		imageData = croppedImage;
+		height = h;
+		width = w;
 	}
 	
 	/**
@@ -145,7 +184,47 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 	public void translate(int rowOffset, int colOffset)
 	{
 		// compléter		
-		
+				AbstractPixel [][] translatedImage = new AbstractPixel[height][width];
+				
+				for(int row=0; row < height; row++)
+				{
+					for(int col=0; col < width; col++)
+					{
+						int oriRow = row - rowOffset;
+						int oriCol = col - colOffset;
+						
+						if(oriRow < height && oriRow >= 0  && oriCol < width && oriCol >= 0){
+							translatedImage[row][col] = imageData[oriRow][oriCol];
+						}
+						else{
+							switch (imageType){
+							
+							case BW:
+										
+								translatedImage[row][col] = new BWPixel();
+								
+								break;
+							case Gray:
+								
+								translatedImage[row][col] = new GrayPixel();
+								
+								break;
+							case Color:
+								
+								translatedImage[row][col] = new ColorPixel();
+								
+								break;
+							case Transparent:
+								
+								translatedImage[row][col] = new TransparentPixel();
+
+								break;
+							}
+						}	
+					}
+				}
+				
+				imageData = translatedImage;
 	}
 	
 	/**

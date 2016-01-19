@@ -41,6 +41,13 @@ public class Main
 		 * Exercice 2
 		 */
 		
+		
+		//PixelMapPlus pmp = new PixelMapPlus("./ed.ppm");
+		PixelMapPlus hpmp = new PixelMapPlus( pmc );
+		hpmp.translate(70, -70);
+
+		wName = "Edsger Dijkstra (Crop)";
+		new DisplayImageWindow(wName, hpmp);
 		/*
 		PixelMapPlus pmp = new PixelMapPlus("./ed.ppm");
 		
