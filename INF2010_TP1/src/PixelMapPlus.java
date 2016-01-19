@@ -57,6 +57,7 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 	public void negate()
 	{
 		// compléter
+		int var;
 		
 	}
 	
