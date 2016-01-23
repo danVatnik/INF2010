@@ -183,6 +183,22 @@ public class PixelMap
 			throw new java.lang.IndexOutOfBoundsException();
 	}
 	
+	protected void setPixel(AbstractPixel newPixel, int row, int col) throws IndexOutOfBoundsException
+	{
+		if(row < 0 || col < 0)
+		{
+			throw new java.lang.IndexOutOfBoundsException();
+		}
+		else if(row<height && col<width)
+		{
+			imageData[row][col] = newPixel;
+		}
+		else
+		{
+			throw new java.lang.IndexOutOfBoundsException();
+		}
+	}
+	
 	/**
 	 * Retourne la hauteur de l'image
 	 */

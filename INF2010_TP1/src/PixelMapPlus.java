@@ -118,7 +118,25 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 			throw new IllegalArgumentException();
 		
 		// compléter
+		int oldWidth = getWidth();
+		int oldHeight = getHeight();
+		float ratioWidth = (float)oldWidth / w;
+		float ratioHeight = (float)oldHeight / h;
 		
+		//On conserve une copie de l'ancienne image avant de commencer les modifications.
+		PixelMap oldImage  = new PixelMap(this);
+		clearData();
+		AllocateMemory(getType(), h, w);
+		
+		for(int i = 0; i < h; ++i)
+		{
+			for(int j = 0; j < w; ++j)
+			{
+				int nearestWidth = (int)(j * ratioWidth);
+				int nearestHeight = (int)(i * ratioHeight);
+				setPixel(oldImage.getPixel(nearestHeight, nearestWidth), i, j);
+			}
+		}
 	}
 	
 	/**
