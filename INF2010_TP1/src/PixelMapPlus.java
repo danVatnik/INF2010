@@ -174,10 +174,23 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 	 */
 	public void zoomIn(int x, int y, double zoomFactor) throws IllegalArgumentException
 	{
-		if(zoomFactor < 1.0)
+		
+		int width = getWidth();
+		int height = getHeight();
+		if(zoomFactor < 1.0 || x < 0 || x > width || y < 0 || y > height)
 			throw new IllegalArgumentException();
 		
-		// compléter
+		//On conserve une copie de l'ancienne image avant de commencer les modifications.
+		PixelMap oldImage  = new PixelMap(this);
 		
+		for(int i = 0; i < height; ++i)
+		{
+			for(int j = 0; j < width; ++j)
+			{
+				double newDistanceX = (j - x) / zoomFactor;
+				double newDistanceY = (i - y) / zoomFactor;
+				setPixel(oldImage.getPixel((int)(y + newDistanceY), (int)(x + newDistanceX)), i, j);
+			}
+		}
 	}
 }
