@@ -118,36 +118,44 @@ public class FormValidator
 	}
 	
 	/**
-	 * Genere et retourne un string de longueur length avec des caracteres aleatoires
-	 * choisis entre A et Z
-	 * @param length : longueur de la chaine de caractere a generer (inferieur ou egal a 10)
-	 */
-	private static String generateCode(int length)
-	{
-		if (length > 10) return null;
-		
-		char[] charKey = new char[ length ];
-		
-		Random generator = new Random( System.nanoTime() );
-		
-		// compléter
-		
-	}
-	
-	/**
-	 * Genere et retourne plusieurs nombres aleatoires entre 0 et 9 (inclus) 
-	 * @param nb : longueur de la chaine de caractere a generer (inferieur ou egal a 10)
-	 */
-	private static int[] generateTransform(int nb)
-	{
-		if (nb > 10) return null;
-		
-		int[] charTransform = new int[ nb ];
-		
-		Random generator = new Random( System.nanoTime() );
-		
-		// compléter
-		
-	}
-
+        * Genere et retourne un string de longueur length avec des caracteres aleatoires
+        * choisis entre A et Z
+        * @param length : longueur de la chaine de caractere a generer (inferieur ou egal a 10)
+        */
+        private static String generateCode(int length)
+        {
+            if (length > 10) return null;
+            
+            char[] charKey = new char[ length ];
+            
+            Random generator = new Random( System.nanoTime() );
+            
+            String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            
+            for(int i = 0 ; i < length; i++){
+                charKey[i] = characters.charAt(generator.nextInt(characters.length()));     
+            }
+    
+            return new String(charKey);
+        }
+        
+        /**
+        * Genere et retourne plusieurs nombres aleatoires entre 0 et 9 (inclus) 
+        * @param nb : longueur de la chaine de caractere a generer (inferieur ou egal a 10)
+        */
+        private static int[] generateTransform(int nb)
+        {
+            if (nb > 10) return null;
+            
+            int[] charTransform = new int[ nb ];
+            
+            Random generator = new Random( System.nanoTime() );
+            
+            for(int i = 0 ; i < nb; i++){
+                charTransform[i] = generator.nextInt(10) + 1;       
+            }
+            
+            return charTransform;
+        }
+ 
 }
