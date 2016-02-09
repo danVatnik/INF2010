@@ -20,6 +20,7 @@ public class SortStackMain
 		stack = sortStack(stack);
 		
 		boolean countIsGood = size(stack) == COUNT;
+		//boolean countIsGood = false;
 			
 		int tmp = stack.pop();
 		while(!stack.isEmpty())
@@ -43,12 +44,24 @@ public class SortStackMain
     
 	private static int size(Stack<Integer> stack) {
 		//A completer
-		return 0;
+		int size = 0;
+		Stack<Integer> tempStack  = new Stack<Integer>();; 
+		
+		while(!stack.empty()){
+			tempStack.push(stack.pop());
+			size++;
+		}
+		
+		while(!tempStack.empty()){
+			stack.push(tempStack.pop());
+		}
+
+		return size;
     }
     
 	static Stack<Integer> sortStack(Stack<Integer> stack)
 	{
-		//A completer
+		
 		return stack;
 	}
 }
