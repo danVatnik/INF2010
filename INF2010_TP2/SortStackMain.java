@@ -43,12 +43,12 @@ public class SortStackMain
     
 	private static int size(Stack<Integer> stack) {
 		//A completer
-	
+		return 0;
     }
     
 	static Stack<Integer> sortStack(Stack<Integer> stack)
 	{
 		//A completer
-		
+		return stack;
 	}
 }
