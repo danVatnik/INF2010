@@ -13,7 +13,19 @@ public class PostfixSolverMain
 		for(String token : s.split("\\s")) 
 		{
 			//A completer
-			
+			if(token.equals("*")){
+				stack.push(stack.pop()* stack.pop());
+			}else if(token.equals("+")){
+				stack.push(stack.pop()+ stack.pop());
+			}else if(token.equals("/")){
+				double val1 = stack.pop();
+				stack.push(stack.pop() / val1);
+			}else if(token.equals("-")){
+				double val1 = stack.pop();
+				stack.push(stack.pop() - val1);
+			}else{
+				stack.push(Double.parseDouble(token));
+			}
 		}
      
 		System.out.println("25 + 5*2 + 15/3 - 5 = "+stack.peek());
