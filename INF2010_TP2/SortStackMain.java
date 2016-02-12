@@ -63,57 +63,48 @@ public class SortStackMain
 		// Setup useful variables
 		int pivot;
 		int value;
-		int size = 0;
+		int size = 1;
 		Stack<Integer> tempStack  = new Stack<Integer>();
 		
-		// Initial sort and saved to tempStack
-		
-		// Set the first value of the stack as pivot 
-		pivot = stack.pop();
-		
-		// Sort through all the stack with the pivot.
-		// When a value is larger than the pivot, push the pivot to the stack
-		// and replace it by the said value.
-		while(!stack.empty()){
-			value = stack.pop();
-			if(value <= pivot)
-				tempStack.push(value);
-			else{
-				tempStack.push(pivot);
-				pivot = value;
+		while(size < SortStackMain.size(stack)){
+			
+			size = 1;
+			
+			// Initial sort and saved to tempStack
+			
+			// Set the first value of the stack as pivot 
+			pivot = stack.pop();
+			
+			// Sort through all the stack with the pivot.
+			// When a value is larger than the pivot, push the pivot to the stack
+			// and replace it by the said value.
+			while(!stack.empty()){
+				value = stack.pop();
+				if(value <= pivot)
+					tempStack.push(value);
+				else{
+					tempStack.push(pivot);
+					pivot = value;
+				}
 			}
+			
+			// Sort tempStack the same way as previous with the only difference being
+			// that the pivot is replaced when a smaller value is encountered. 
+			while(!tempStack.empty()){
+				value = tempStack.pop();
+				if(value >= pivot)
+					stack.push(value);
+				else{
+					stack.push(pivot);
+					pivot = value;
+					size++;
+				}
+			}
+			// Add pivot back to the stack
+			stack.push(pivot);
 			size++;
+
 		}
-		// Add pivot back to the stack
-		tempStack.push(pivot);
-		size++;
-		
-		// Re-stack tempStack back to the original stack by sorting it again
-		
-		// Set pivot.
-		pivot = tempStack.pop();
-		
-		// Sort tempStack the same way as previous with the only difference being
-		// that the pivot is replaced when a smaller value is encountered. 
-		while(!tempStack.empty()){
-			value = tempStack.pop();
-			if(value >= pivot)
-				stack.push(value);
-			else{
-				stack.push(pivot);
-				pivot = value;
-				size--;
-			}
-		}
-		// Add pivot back to the stack
-		stack.push(pivot);
-		size--;
-		
-		// If he pivot was replaced as often as the size of the stack,
-		// the stack is sorted.
-		if(size != 0)
-			return sortStack(stack);
-		else
-			return stack;
+		return stack;
 	}
 }
