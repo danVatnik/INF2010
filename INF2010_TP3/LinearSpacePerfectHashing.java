@@ -30,18 +30,41 @@ public class LinearSpacePerfectHashing<AnyType>
       
       if(array == null || array.size() == 0)
       {
-         // A completer
+         data =  (QuadraticSpacePerfectHashing<AnyType>[]) new QuadraticSpacePerfectHashing[0];
          return;
       }
       if(array.size() == 1)
       {
          a = b = 0;
-         
-         // A completer
+         data = (QuadraticSpacePerfectHashing<AnyType>[]) new QuadraticSpacePerfectHashing[1];
+         data[0] = new QuadraticSpacePerfectHashing<AnyType>(array);
          return;
       }
       
-      // A completer
+      //On crée un tableau qui contiendra des ArrayList qui eux contiendront les différents éléments qui ont le même index.
+      int nbElements = array.size();
+      data = (QuadraticSpacePerfectHashing<AnyType>[]) new QuadraticSpacePerfectHashing[nbElements];
+      ArrayList<ArrayList<AnyType>> tempArray = new ArrayList<ArrayList<AnyType>>(nbElements);
+      for(int i = 0; i < nbElements; ++i)
+      {
+    	  tempArray.add(new ArrayList<AnyType>());
+      }
+      
+      //On calcule l'index pour chacun des éléments et on les ajoute dans notre tableau
+      a = generator.nextInt(p - 1) + 1;
+      b = generator.nextInt(p);
+      for(AnyType element : array)
+      {
+    	  int index = ( ( a*element.hashCode() + b ) % p ) % data.length;
+          index = ( index < 0 ? index + data.length : index );
+          tempArray.get(index).add(element);
+      }
+      
+      //On crée un QuadraticSpacePerfectHashing pour chacun de nos ArrayList
+      for(int i = 0; i < nbElements; ++i)
+      {
+    	  data[i] = new QuadraticSpacePerfectHashing<AnyType>(tempArray.get(i));
+      }
    }
    
    public int Size()
