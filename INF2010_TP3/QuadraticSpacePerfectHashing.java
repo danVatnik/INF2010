@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.sun.xml.internal.bind.AnyTypeAdapter;
+
 public class QuadraticSpacePerfectHashing<AnyType> 
 {
    static int p = 46337;
@@ -53,13 +55,16 @@ public class QuadraticSpacePerfectHashing<AnyType>
       if(array == null || array.size() == 0)
       {
          // A completer
+    	 items = (AnyType[]) new Object[0];
          return;
       }
       if(array.size() == 1)
       {
          a = b = 0;
          
-         // A completer			
+         // A completer
+    	 items = (AnyType[]) new Object[1];
+    	 items[0] = array.get(0);
          return;
       }
       
@@ -68,6 +73,8 @@ public class QuadraticSpacePerfectHashing<AnyType>
          items = null;
          
          // A completer
+         a = generator.nextInt(p - 1) + 1;
+         b = generator.nextInt(p);
          
       }
       while( collisionExists( array ) );
