@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 import com.sun.xml.internal.bind.AnyTypeAdapter;
 
 public class QuadraticSpacePerfectHashing<AnyType> 
@@ -84,7 +86,17 @@ public class QuadraticSpacePerfectHashing<AnyType>
    private boolean collisionExists(ArrayList<AnyType> array)
    {
       // A completer
-      
+	   items = (AnyType[]) new Object[(int)Math.pow(array.size(),2)];
+	   
+	   for(AnyType item:array){
+		   
+		   int index = ( ( a * item.hashCode() + b ) % p ) % items.length;
+		   
+		   index = ( index < 0 ? index + items.length : index );
+		   
+		   items[index] = item;
+	   }
+	   
       return false;
    }
 }
