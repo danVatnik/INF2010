@@ -104,50 +104,135 @@ public class RedBlackTree<T extends Comparable<? super T> >
 
    private void insertionCases( RBNode<T> X )
    {
-      // A MODIFIER/COMPLÉTER
-      insertionCase1( X );
+      if(X != null)
+      {
+    	  insertionCase1( X );
+      }
    }
    
    private void insertionCase1 ( RBNode<T> X )
    {
-      // A MODIFIER/COMPLÉTER
-      insertionCase2( X );
+      if(X.parent == null)
+      {
+    	  X.setToBlack();
+      }
+      else
+      {
+    	  insertionCase2( X ); 
+      }
    }
 
    private void insertionCase2( RBNode<T> X )
    {
-      // A MODIFIER/COMPLÉTER
-      insertionCase3( X );
+      if(X.parent.isRed())
+      {
+    	  insertionCase3( X );
+      }
+      return;
    }
 
    private void insertionCase3( RBNode<T> X )
    {
-      // A MODIFIER/COMPLÉTER
-      insertionCase4( X );
+	  RBNode<T> uncle = X.uncle();
+      if(uncle.isRed())
+      {
+    	  X.parent.setToBlack();
+    	  uncle.setToBlack();
+    	  X.grandParent().isRed();
+    	  this.insertionCases(X.grandParent());
+      }
+      else
+      {
+    	  insertionCase4( X ); 
+      }
    }
 
    private void insertionCase4( RBNode<T> X )
    {
-      // A MODIFIER/COMPLÉTER
-      insertionCase5( X );
+      if(X.parent.leftChild == X && X.grandParent().rightChild == X.parent)
+      {
+    	  this.rotateRight(X.parent);
+    	  insertionCase5( X.rightChild );
+      }
+      else if(X.parent.rightChild == X && X.grandParent().leftChild == X.parent)
+      {
+    	  this.rotateLeft(X.parent);
+    	  insertionCase5(X.leftChild);
+      }
+      else
+      {
+    	  insertionCase5( X );
+      }
    }
 
    private void insertionCase5( RBNode<T> X )
    {
-      // A MODIFIER/COMPLÉTER
+	   RBNode<T> gParent = X.grandParent();
+	   if(X.parent.rightChild == X && gParent.rightChild == X.parent)
+       {
+		   X.parent.ToggleColor();
+		   gParent.ToggleColor();
+    	   this.rotateLeft(gParent);
+       }
+       else if(X.parent.leftChild == X && gParent.leftChild == X.parent)
+       {
+    	   X.parent.ToggleColor();
+		   gParent.ToggleColor();
+    	   this.rotateRight(gParent);
+       }
+      return;
+   }
+   
+   private void rotateLeft( RBNode<T> X )
+   {
+	   RBNode<T> parent = X.parent;
+       RBNode<T> temp = X;
+       RBNode<T> child = X.rightChild;
+       RBNode<T> gChild = X.rightChild.leftChild;
+       
+       if(parent.rightChild == temp)
+       {
+     	  parent.rightChild = child;
+       }
+       else
+       {
+     	  parent.leftChild = child;
+       }
+       child.parent = parent;
+  
+       child.leftChild = temp;
+       temp.parent = child;
+       
+       temp.rightChild = gChild;
+       gChild.parent = temp;
+       
       return; 
    }
    
-   private void rotateLeft( RBNode<T> G )
+   private void rotateRight( RBNode<T> X )
    {
-      // A MODIFIER/COMPLÉTER
-      return; 
-   }
-   
-   private void rotateRight( RBNode<T> G )
-   {
-      // A MODIFIER/COMPLÉTER
-      return; 
+       RBNode<T> parent = X.parent;
+       RBNode<T> temp = X;
+       RBNode<T> child = X.leftChild;
+       RBNode<T> gChild = X.leftChild.rightChild;
+       
+       if(parent.rightChild == temp)
+       {
+     	  parent.rightChild = child;
+       }
+       else
+       {
+     	  parent.leftChild = child;
+       }
+       child.parent = parent;
+  
+       child.rightChild = temp;
+       temp.parent = child;
+       
+       temp.leftChild = gChild;
+       gChild.parent = temp;
+      
+       return; 
    }
 
    public void printTreePreOrder()
@@ -310,6 +395,18 @@ public class RedBlackTree<T extends Comparable<? super T> >
     		  sibling = this.parent.leftChild;
     	  
     	  return sibling;
+      }
+      
+      public void ToggleColor()
+      {
+    	  if(this.isBlack())
+    	  {
+    		  this.setToRed();
+    	  }
+    	  else
+    	  {
+    		  this.setToBlack();
+    	  }
       }
       
       public String toString()
