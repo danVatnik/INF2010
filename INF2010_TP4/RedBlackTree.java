@@ -263,7 +263,11 @@ public class RedBlackTree<T extends Comparable<? super T> >
    {
 	  if(!P.isNil())
 	  {
-		  System.out.print("{"+P.toString()+"}, ");
+		  if(P != root)
+		  {
+			  System.out.print(", ");
+		  }
+		  System.out.print("{"+P.toString()+"}");
 		  printTreePreOrder(P.leftChild);
 		  printTreePreOrder(P.rightChild);
 	  }
@@ -289,7 +293,11 @@ public class RedBlackTree<T extends Comparable<? super T> >
 	  {
 		  printTreePostOrder(P.leftChild);
 		  printTreePostOrder(P.rightChild);
-		  System.out.print("{"+P.toString()+"}, ");
+		  System.out.print("{"+P.toString()+"} ");
+		  if(P != root)
+		  {
+			  System.out.print(", ");
+		  }
 	  }
       return; 
    }
