@@ -358,6 +358,21 @@ public class RedBlackTree<T extends Comparable<? super T> >
          
          //  À COMPLÉTER
          
+         RBNode<T> current = null;
+         while(!q.isEmpty()){
+        	 current = q.remove();
+        	 
+        	 if(current != root)
+        		 System.out.print(", ");
+        	 	 
+        	System.out.print("{"+current.toString()+"}");
+        	 
+        	 if(!current.leftChild.isNil())
+        		 q.add(current.leftChild);
+        	 if(!current.rightChild.isNil())
+        		 q.add(current.rightChild); 
+        	 
+         }
          System.out.println( " )");
       }
       return;
