@@ -250,7 +250,12 @@ public class RedBlackTree<T extends Comparable<? super T> >
    
    private void printTreePreOrder( RBNode<T> P )
    {
-      // A MODIFIER/COMPLÉTER
+	  if(!P.isNil())
+	  {
+		  System.out.print("{"+P.toString()+"}, ");
+		  printTreePreOrder(P.leftChild);
+		  printTreePreOrder(P.rightChild);
+	  }
       return; 
    }
    
@@ -269,7 +274,12 @@ public class RedBlackTree<T extends Comparable<? super T> >
   
    private void printTreePostOrder( RBNode<T> P )
    {
-      // A MODIFIER/COMPLÉTER
+	  if(!P.isNil())
+	  {
+		  printTreePostOrder(P.leftChild);
+		  printTreePostOrder(P.rightChild);
+		  System.out.print("{"+P.toString()+"}, ");
+	  }
       return; 
    }
    
@@ -289,8 +299,13 @@ public class RedBlackTree<T extends Comparable<? super T> >
   
    private void printTreeAscendingOrder( RBNode<T> P )
    {
-      // A COMPLÉTER
-	   
+	  if(!P.isNil())
+	  {
+		  printTreeAscendingOrder(P.leftChild);
+		  System.out.print("{"+P.toString()+"}, ");
+		  printTreeAscendingOrder(P.rightChild);
+	  }
+      return; 
    }
    
    
@@ -309,8 +324,13 @@ public class RedBlackTree<T extends Comparable<? super T> >
 
    private void printTreeDescendingOrder( RBNode<T> P )
    {
-      // A COMPLÉTER
-	   
+	   if(!P.isNil())
+	   {
+		   printTreeDescendingOrder(P.rightChild);
+		   System.out.print("{"+P.toString()+"}, ");
+		   printTreeDescendingOrder(P.leftChild);
+	   }
+	   return; 
    }
    
    public void printTreeLevelOrder()
