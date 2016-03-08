@@ -50,7 +50,18 @@ public class RedBlackTree<T extends Comparable<? super T> >
    
    private T find(RBNode<T> current, int key)
    {
-      // À COMPLÉTER
+	   int currentKey = current.value.hashCode();
+	   
+	   if(currentKey == key)
+		   return current.value;
+	   
+	   if(current.isBlack()){
+		   if(key < currentKey)
+			   return find(current.leftChild, key);
+		   else
+			   return find(current.rightChild, key);
+	   }
+	   
 	   return null;
    }
    
@@ -428,6 +439,7 @@ public class RedBlackTree<T extends Comparable<? super T> >
     		  this.setToBlack();
     	  }
       }
+      
       
       public String toString()
       {
