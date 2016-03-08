@@ -18,7 +18,7 @@
 			tree.printFancyTree();
 			System.out.println();
 		}
-
+		
 		// Verifier find()
 		Integer n = tree.find(20);
 		System.out.print("Recherche valeur 20 : ");

@@ -51,6 +51,7 @@ public class RedBlackTree<T extends Comparable<? super T> >
    private T find(RBNode<T> current, int key)
    {
       // À COMPLÉTER
+	   return null;
    }
    
    public void insert(T val)
@@ -273,16 +274,42 @@ public class RedBlackTree<T extends Comparable<? super T> >
       RBNode<T> grandParent()
       {
          // À COMPLÉTER
+    	  RBNode<T> gParent = null;
+    	  
+    	  if(this.parent != null)
+    		  gParent = this.parent.parent;
+    	 
+    	  return gParent;
       }
       
       RBNode<T> uncle()
       {
          // À COMPLÉTER
+    	  
+    	  RBNode<T> gParent = this.grandParent();
+    	  RBNode<T> uncle = null;
+    	  
+    	  if(gParent != null){
+    		  if(gParent.leftChild == this.parent)
+    			  uncle = gParent.rightChild;
+    		  else
+    			  uncle = gParent.leftChild;
+    	  }
+    	  
+    	  return uncle;
       }
       
       RBNode<T> sibling()
       {
          // À COMPLÉTER
+    	  RBNode<T> sibling = null;
+    	  
+    	  if(this.parent.leftChild == this)
+    		  sibling = this.parent.rightChild;
+    	  else
+    		  sibling = this.parent.leftChild;
+    	  
+    	  return sibling;
       }
       
       public String toString()
