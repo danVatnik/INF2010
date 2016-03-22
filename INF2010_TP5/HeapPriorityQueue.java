@@ -6,13 +6,13 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
 
     private static final int DEFAULT_CAPACITY = 20;
 
-    private int currentSize;              // nombre d'ÈlÈments prÈsents
-    private PQEntry<AnyType>[] items;     // tableau contenant les ÈlÈments ordonnÈs en tas
-    Hashtable<AnyType, Integer> indexMap; // Mappe associant ‡ chaque ÈlÈment Anytype un entier 
+    private int currentSize;              // nombre d'√©l√©ments pr√©sents
+    private PQEntry<AnyType>[] items;     // tableau contenant les √©l√©ments ordonn√©s en tas
+    Hashtable<AnyType, Integer> indexMap; // Mappe associant √† chaque √©l√©ment Anytype un entier 
                                           // (sa position dans items)
     
     /**
-     * MÈthodes dÈj‡ implÈmentÈes
+     * M√©thodes d√©j√† impl√©ment√©es
      */
     public HeapPriorityQueue(){
         initialize();
@@ -69,10 +69,10 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
     }
     
     /**
-     * MÈthodes ‡ implÈmenter
+     * M√©thodes √† impl√©menter
      */
     
-    // Commentez la ligne de add1 et dÈcommenter la ligne de add2 pour l'exercice 5
+    // Commentez la ligne de add1 et d√©commenter la ligne de add2 pour l'exercice 5
     public boolean add(AnyType x, int priority) throws NullPointerException, IllegalArgumentException {
         return add1(x, priority); // Exercice 1
         //return add2(x, priority); // Exercice 5
@@ -82,11 +82,28 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
      * Exercice 1
      */
     private boolean add1(AnyType x, int priority) throws NullPointerException, IllegalArgumentException {
-        // completer
+    	
+    	if(priority < 0)
+    		throw new IllegalArgumentException();
+    	
+    	if(x == null)
+    		throw new NullPointerException();
+    	
+    	if(currentSize == items.length - 1)
+    		enlargeArray(items.length * 2 + 1);
+    	
+    	int hole = ++currentSize;
+    	
+    	for( ; hole > 1 && priority < items[hole/2].priority; hole /= 2){
+    		items[hole] = items[hole/2];
+    	}
+    	
+    	items[hole] = new PQEntry<AnyType>(x, priority);
+    	
         return true;
     }
 
-    // Commentez la ligne de poll1 et dÈcommenter la ligne de poll2 pour l'exercice 6
+    // Commentez la ligne de poll1 et d√©commenter la ligne de poll2 pour l'exercice 6
     public AnyType poll(){ 
         return poll1(); // Exercice 2
         // return poll2(); // Exercice 6
@@ -96,15 +113,40 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
      * Exercice 2
      */
     private AnyType poll1(){ 
-        // completer
-        return null;
+        
+    	if( isEmpty( ) )
+    		return null;
+    	
+		AnyType minItem = items[1].value;
+		items[ 1 ] = items[ currentSize--];
+		percolateDown1( 1 );
+		
+		return minItem;
+    	
     }
 
     private void percolateDown1( int hole ){
-         // completer
+         
+    	int child;
+    	PQEntry<AnyType> tmp = items[ hole ];
+    	
+    	for( ; hole * 2 <= currentSize; hole = child ){
+    		child = hole * 2; //Considerer fils de gauche
+    		
+    		if( child != currentSize && // il y a deux fils
+				items[ child + 1 ].priority < items[ child ].priority  )//et fils droit<fils gauche
+    			
+    			child++; //Consid√©rer fils droit
+    		
+    		if( items[ child ].priority < tmp.priority )//fils consid√©r√©< √©l√©ment √† percoler
+    			items[ hole ] = items[ child ];//Remonter le fils courrent de un niveau
+    		else
+    			break; //sortir de la boucle. L‚Äô√©l√©ment √† percoler sera ins√©r√©√† position hole
+    	}
+    	items[ hole ] = tmp;// Ins√©rer l‚Äô√©l√©ment √† percoler √† la position hole
     }
     
-    // Commentez la ligne de buildHeap1 et dÈcommenter la ligne de buildHeap2 pour l'exercice 7
+    // Commentez la ligne de buildHeap1 et d√©commenter la ligne de buildHeap2 pour l'exercice 7
     public HeapPriorityQueue( AnyType[] items, int[] priorities )
     throws IllegalArgumentException, NullPointerException{
         buildHeap1( items, priorities ); // Exercice 3
