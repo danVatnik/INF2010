@@ -274,13 +274,43 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
      */
     private void buildHeap2( AnyType[] items, int[] priorities ) 
     throws IllegalArgumentException, NullPointerException{
-        // completer
+    	initialize(priorities.length + 1);
+    	
+    	for(int i = 0; i < priorities.length; i++){
+    		
+    		if(items[i] == null)
+    			throw new NullPointerException();
+    		
+			if(priorities[i] < 0)
+	    		throw new IllegalArgumentException();
+    	    
+			this.items[i + 1] = new PQEntry<AnyType>(items[i], priorities[i]);
+			if(!contains(items[i]))
+			{
+				indexMap.put(items[i], i+1);
+			}
+    	    currentSize ++;		
+    	}
+    	
+    	for( int i = currentSize / 2; i > 0; i--)
+    		percolateDown2( i );
     }
 
     /**
      * Exercice 8
      */
     public void updatePriority(AnyType x, int priority){
-    	// completer
+    	Integer index = indexMap.get(x);
+    	if(index == null)
+    	{
+    		throw new IllegalArgumentException();
+    	}
+    	
+    	AnyType tmp = items[index].value;
+    	indexMap.remove(tmp);
+    	items[ index ] = items[ currentSize--];
+    	indexMap.replace(items[index].value, index);
+    	percolateDown2(index);
+    	add2(tmp, priority);
     }
 }
