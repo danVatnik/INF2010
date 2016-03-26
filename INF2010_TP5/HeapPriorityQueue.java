@@ -74,8 +74,8 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
     
     // Commentez la ligne de add1 et décommenter la ligne de add2 pour l'exercice 5
     public boolean add(AnyType x, int priority) throws NullPointerException, IllegalArgumentException {
-        return add1(x, priority); // Exercice 1
-        //return add2(x, priority); // Exercice 5
+        //return add1(x, priority); // Exercice 1
+        return add2(x, priority); // Exercice 5
     }
     
     /**
@@ -105,8 +105,8 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
 
     // Commentez la ligne de poll1 et décommenter la ligne de poll2 pour l'exercice 6
     public AnyType poll(){ 
-        return poll1(); // Exercice 2
-        // return poll2(); // Exercice 6
+        //return poll1(); // Exercice 2
+        return poll2(); // Exercice 6
     }
 
     /**
@@ -149,8 +149,8 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
     // Commentez la ligne de buildHeap1 et décommenter la ligne de buildHeap2 pour l'exercice 7
     public HeapPriorityQueue( AnyType[] items, int[] priorities )
     throws IllegalArgumentException, NullPointerException{
-        buildHeap1( items, priorities ); // Exercice 3
-        // buildHeap2( items, priorities ); // Exercice 7
+        //buildHeap1( items, priorities ); // Exercice 3
+        buildHeap2( items, priorities ); // Exercice 7
     }
     
     /**
@@ -158,7 +158,7 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
      */
     private void buildHeap1( AnyType[] items, int[] priorities ) 
     throws IllegalArgumentException, NullPointerException{
-       // completer
+    	// completer
     }
 
     
@@ -174,7 +174,28 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
      * Exercice 5
      */
     private boolean add2(AnyType x, int priority) throws IllegalArgumentException{
-        // Completer
+    	
+    	if(priority < 0)
+    		throw new IllegalArgumentException();
+    	
+    	if(x == null)
+    		throw new NullPointerException();
+    	
+    	if(!contains(x))
+    	{
+	    	if(currentSize == items.length - 1)
+	    		enlargeArray(items.length * 2 + 1);
+	    	
+	    	int hole = ++currentSize;
+	    	
+	    	for( ; hole > 1 && priority < items[hole/2].priority; hole /= 2){
+	    		items[hole] = items[hole/2];
+	    		indexMap.replace(items[hole].value, hole);
+	    	}
+	    	
+	    	items[hole] = new PQEntry<AnyType>(x, priority);
+	    	indexMap.put(x, hole);
+    	}
         return true;
     }
     
@@ -182,12 +203,39 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
      * Exercice 6
      */
     private AnyType poll2(){ 
-        // completer
-        return null;
+    	if( isEmpty( ) )
+    		return null;
+    	
+		AnyType minItem = items[1].value;
+		indexMap.remove(minItem);
+		items[ 1 ] = items[ currentSize--];
+		indexMap.replace(items[1].value, 1);
+		percolateDown2( 1 );
+		
+		return minItem;
     }
 
     private void percolateDown2( int hole ){
-        // completer
+    	int child;
+    	PQEntry<AnyType> tmp = items[ hole ];
+    	
+    	for( ; hole * 2 <= currentSize; hole = child ){
+    		child = hole * 2; //Considerer fils de gauche
+    		
+    		if( child != currentSize && // il y a deux fils
+				items[ child + 1 ].priority < items[ child ].priority  )//et fils droit<fils gauche
+    			
+    			child++; //Considérer fils droit
+    		
+    		if( items[ child ].priority < tmp.priority ){//fils considéré< élément à percoler
+    			items[ hole ] = items[ child ];//Remonter le fils courrent de un niveau
+    			indexMap.replace(items[child].value, hole);
+    		}
+    		else
+    			break; //sortir de la boucle. L’élément à percoler sera inséré à position hole
+    	}
+    	items[ hole ] = tmp;// Insérer l’élément à percoler à la position hole
+    	indexMap.replace(tmp.value, hole);
     }
     
     /**
@@ -202,6 +250,6 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
      * Exercice 8
      */
     public void updatePriority(AnyType x, int priority){
-        // completer      
+    	// completer
     }
 }

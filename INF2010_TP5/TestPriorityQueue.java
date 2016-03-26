@@ -4,21 +4,21 @@ public class TestPriorityQueue {
 
     public static void main(String[] args) {
         
-        final boolean testPartII = false; // Changer pour true pour la partie II
+        final boolean testPartII = true; // Changer pour true pour la partie II
 
-        // Éléments
+        // Ã‰lÃ©ments
         String[] items = {
                 "v_01", "v_02", "v_03", "v_04", "v_05", 
                 "v_06", "v_07", "v_08", "v_09", "v_10", 
                 "v_11", "v_12", "v_13", "v_14", "v_15"};
         
-        // Priorités
+        // PrioritÃ©s
         int[] priorities = {
                      4,      5,      6,      1,      2, 
                      5,      3,      4,      2,      6, 
                      3,      4,      6,      2,      5};
         
-        // File de priorité
+        // File de prioritÃ©
         HeapPriorityQueue<String> hpq;
         
         // Instantiation
@@ -26,20 +26,20 @@ public class TestPriorityQueue {
         
         // Teste exercice 1/5
         for(int i=0; i<priorities.length; i++){
-            System.out.println("Insert " + items[i] + " avec priorité " + priorities[i]);
+            System.out.println("Insert " + items[i] + " avec prioritÃ© " + priorities[i]);
             hpq.add(items[i], priorities[i]);
         }
         
-        System.out.println("Résultat:\n" + hpq.toString() + "\n");
+        System.out.println("RÃ©sultat:\n" + hpq.toString() + "\n");
         
         // Teste exercice 2/6
         while(!hpq.isEmpty()){
-          System.out.println("Retire " + hpq.poll() + ", résultat:");
+          System.out.println("Retire " + hpq.poll() + ", rÃ©sultat:");
           System.out.println( hpq.toString() );
         }
         
         // Teste exercice 3/7
-        System.out.println("Constructeur avec paramètres:");
+        System.out.println("Constructeur avec paramÃ¨tres:");
         // items[9] = items[0];
         System.out.println( hpq = new HeapPriorityQueue<String>(items, priorities) );
         
@@ -56,7 +56,7 @@ public class TestPriorityQueue {
             return;
         
         // Teste exercice 8
-        System.out.println("\nModifie priorité de v_13 avec priorité 0");
+        System.out.println("\nModifie prioritÃ© de v_13 avec prioritÃ© 0");
         hpq.updatePriority("v_13", 0);
         System.out.println( hpq.toString() );
         
