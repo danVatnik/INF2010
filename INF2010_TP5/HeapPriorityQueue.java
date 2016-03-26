@@ -141,7 +141,7 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
     		if( items[ child ].priority < tmp.priority )//fils considéré< élément à percoler
     			items[ hole ] = items[ child ];//Remonter le fils courrent de un niveau
     		else
-    			break; //sortir de la boucle. L’élément à percoler sera inséréà position hole
+    			break; //sortir de la boucle. L’élément à percoler sera inséré à position hole
     	}
     	items[ hole ] = tmp;// Insérer l’élément à percoler à la position hole
     }
@@ -158,7 +158,22 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
      */
     private void buildHeap1( AnyType[] items, int[] priorities ) 
     throws IllegalArgumentException, NullPointerException{
-    	// completer
+    	initialize(priorities.length + 1);
+    	
+    	for(int i = 0; i < priorities.length; i++){
+    		
+    		if(items[i] == null)
+    			throw new NullPointerException();
+    		
+			if(priorities[i] < 0)
+	    		throw new IllegalArgumentException();
+    	    
+			this.items[i + 1] = new PQEntry<AnyType>(items[i], priorities[i]);
+    	    currentSize ++;		
+    	}
+    	
+    	for( int i = currentSize / 2; i > 0; i--)
+    		percolateDown1( i );
     }
 
     
@@ -166,15 +181,31 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
      * Exercice 4
      */
     public ArrayList<AnyType> getMax() {
-        // completer
-        return null;
+        
+    	int max = 0;
+    	
+    	ArrayList<AnyType> maxList = new ArrayList<AnyType>();
+    	
+    	for( int i = (currentSize + 1) / 2; i <= currentSize; i++){
+    		
+    		if(items[i].priority > max)
+    			max = items[i].priority;
+    	}
+    	
+    	for(int i = 1; i <= currentSize; i++){
+    		
+    		if(items[i].priority == max)
+    			maxList.add(items[i].value);
+    		
+    	}
+    	
+        return maxList;
     }
     
     /**
      * Exercice 5
      */
     private boolean add2(AnyType x, int priority) throws IllegalArgumentException{
-    	
     	if(priority < 0)
     		throw new IllegalArgumentException();
     	
