@@ -226,8 +226,12 @@ public class HeapPriorityQueue<AnyType> implements PriorityQueue<AnyType>{
 	    	
 	    	items[hole] = new PQEntry<AnyType>(x, priority);
 	    	indexMap.put(x, hole);
+	    	return true;
     	}
-        return true;
+    	else
+    	{
+    		return false;
+    	}
     }
     
     /**
