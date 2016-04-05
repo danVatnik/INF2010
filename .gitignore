@@ -1,7 +1,9 @@
 .directory
 .metadata/
 .project/
+.project
 .classpath/
+.classpath
 *.class
 RemoteSystemsTempFiles/
 /bin/
