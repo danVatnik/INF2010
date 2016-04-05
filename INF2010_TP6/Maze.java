@@ -46,9 +46,17 @@ public class Maze{
 	}
 
 	public void generate(){
-		// EXERCICE 1
-		// completer
 		
+		for(int index = walls.size() - 1; index >= 0; --index)
+		{
+			Wall mur = walls.get(index);
+			if(!ds.areInSameSet(mur.room1, mur.room2))
+			{
+				walls.remove(index);
+				ds.union(mur.room1, mur.room2);
+				mazeGraph.connect(mur.room1, mur.room2);
+			}
+		}
 	}
 
 	public void solve(){
