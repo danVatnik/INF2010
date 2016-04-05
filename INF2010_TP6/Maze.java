@@ -71,9 +71,29 @@ public class Maze{
         room.distance = 0;
         q.add(room);
         
-		// EXERCICE 2
-        // A completer
-		
+        while(!q.isEmpty())
+        {
+        	Room piece = q.poll();
+        	for(Iterator<Room> voisins = piece.neighboors.iterator(); voisins.hasNext();)
+            {
+        		Room unVoisin = voisins.next();
+            	if(unVoisin.distance == -1)
+            	{
+            		unVoisin.distance = piece.distance + 1;
+            		unVoisin.source = piece;
+            		q.add(unVoisin);
+            	}
+            }
+        }
+        
+        Room roomToStart = mazeGraph.getFinish();
+        do
+        {
+        	path.add(roomToStart.id);
+        	roomToStart = roomToStart.source;
+        }
+        while(roomToStart != room);
+        path.add(roomToStart.id);
 	}
 
 	public class Wall{
