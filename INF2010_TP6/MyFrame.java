@@ -40,11 +40,11 @@ public class MyFrame extends JFrame {
 		mazePanelContainer = new MyPanel(m);
 
 		controlsp.add(new JLabel("Graine"));
-		JTextField jtf = new JTextField(String.valueOf(seed), 10);
+		final JTextField jtf = new JTextField(String.valueOf(seed), 10);
 		controlsp.add(jtf);
 
 		// Ajouter bouton genere
-		JButton generer = new JButton("Générer");
+		JButton generer = new JButton("GÃ©nÃ©rer");
 		generer.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -64,7 +64,7 @@ public class MyFrame extends JFrame {
 		controlsp.add(generer);
 
 		// Ajouter bouton resoudre
-		JButton resoudre = new JButton("Résoudre");
+		JButton resoudre = new JButton("RÃ©soudre");
 
 		resoudre.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
